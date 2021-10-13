@@ -6,3 +6,4 @@ export { default as HomeIcon } from './HomeIcon';
 export { default as ApplicationIcon } from './ApplicationIcon';
 export { default as DrawerIcon } from './DrawerIcon';
 export { default as EditPencil } from './EditPencil';
+export { default as LocationIcon } from './locationIcon';

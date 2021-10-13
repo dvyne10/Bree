@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { FlatList, ScrollView, View } from 'react-native';
+import { FlatList, ScrollView, View, TouchableOpacity } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import FastImage from 'react-native-fast-image';
 import { Button, StyledText, TextInput } from '~/components';
 
-const DisplayCard = ({ name, location, image }) => {
+const DisplayCard = ({ name, location, image, onPress }) => {
   return (
     <>
-      <View
+      <TouchableOpacity
+        onPress={() => onPress()}
         style={{
           height: 120,
           width: '100%',
@@ -26,7 +27,7 @@ const DisplayCard = ({ name, location, image }) => {
             {location}
           </StyledText>
         </View>
-      </View>
+      </TouchableOpacity>
     </>
   );
 };
@@ -50,9 +51,11 @@ const SearchResults = ({ navigation }) => {
             return (
               <>
                 <DisplayCard
+                  key={item.name}
                   name={item.name}
                   location={item.location}
                   image={item.image}
+                  onPress={() => navigation.navigate('SchoolForm')}
                 />
               </>
             );

@@ -6,6 +6,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { createStackNavigator } from '@react-navigation/stack';
 import SearchResults from './SearchResults';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import SchoolForm from './SchoolForm';
 
 const EligibilityScreen = ({ navigation }) => {
   const [open, setOpen] = useState(false);
@@ -74,10 +75,36 @@ const EligibilityScreen = ({ navigation }) => {
             <StyledText>Subjects</StyledText>
             <StyledText>Grades</StyledText>
           </View>
-          <FlatList
-            data={core}
-            renderItem={({ item, index }) => {
-              return (
+          {core?.map((item, index) => {
+            return (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  width: '100%',
+                  marginTop: 10,
+                }}
+                key={item.id}>
+                <View style={styles.subject}>
+                  <StyledText>{item.value}</StyledText>
+                </View>
+                <View style={styles.grade}>
+                  <TextInput
+                    containerStyleOverride={styles.textInput}
+                    maxLength={2}
+                    onChangeText={value => {
+                      const newCore = core.slice();
+                      newCore[index].grade = value;
+                      setCore(newCore);
+                    }}
+                  />
+                </View>
+              </View>
+            );
+          })}
+          {elective?.map((item, index) => {
+            return (
+              <>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -94,59 +121,27 @@ const EligibilityScreen = ({ navigation }) => {
                       containerStyleOverride={styles.textInput}
                       maxLength={2}
                       onChangeText={value => {
-                        const newCore = core.slice();
-                        newCore[index].grade = value;
-                        setCore(newCore);
+                        const newElective = elective.slice();
+                        newElective[index].grade = value;
+                        setElective(newElective);
                       }}
                     />
                   </View>
                 </View>
-              );
-            }}
-          />
+              </>
+            );
+          })}
           {elective && (
-            <>
-              <FlatList
-                data={elective}
-                renderItem={({ item, index }) => {
-                  return (
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        width: '100%',
-                        marginTop: 10,
-                      }}
-                      key={item.id}>
-                      <View style={styles.subject}>
-                        <StyledText>{item.value}</StyledText>
-                      </View>
-                      <View style={styles.grade}>
-                        <TextInput
-                          containerStyleOverride={styles.textInput}
-                          maxLength={2}
-                          onChangeText={value => {
-                            const newElective = elective.slice();
-                            newElective[index].grade = value;
-                            setElective(newElective);
-                          }}
-                        />
-                      </View>
-                    </View>
-                  );
-                }}
-              />
-              <Button
-                style={styles.button}
-                // disabled={error}
-                onPress={() => {
-                  // console.log('newCore', core);
-                  // console.log('newElective', elective);
-                  navigation.navigate('SearchResults');
-                }}>
-                <Button.Text color={'white'}>Next</Button.Text>
-              </Button>
-            </>
+            <Button
+              style={styles.button}
+              // disabled={error}
+              onPress={() => {
+                // console.log('newCore', core);
+                // console.log('newElective', elective);
+                navigation.navigate('SearchResults');
+              }}>
+              <Button.Text color={'white'}>Next</Button.Text>
+            </Button>
           )}
         </View>
       </ScrollView>
@@ -198,6 +193,11 @@ const EligibilityUpStack = () => {
         <Stack.Screen
           name="SearchResults"
           component={SearchResults}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SchoolForm"
+          component={SchoolForm}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
