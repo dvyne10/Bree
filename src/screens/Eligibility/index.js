@@ -7,6 +7,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SearchResults from './SearchResults';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import SchoolForm from './SchoolForm';
+import FirstPage from '../Forms/FirstPage';
+import SecondPage from '../Forms/SecondPage';
+import ThirdPage from '../Forms/ThirdPage';
+import FourthPage from '../Forms/FourthPage';
+import FifthPage from '../Forms/FifthPage';
+import FinalPage from '../Forms/FinalPage';
 
 const EligibilityScreen = ({ navigation }) => {
   const [open, setOpen] = useState(false);
@@ -198,6 +204,36 @@ const EligibilityUpStack = () => {
         <Stack.Screen
           name="SchoolForm"
           component={SchoolForm}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FormScreen"
+          component={FirstPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SecondPage"
+          component={SecondPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ThirdPage"
+          component={ThirdPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FourthPage"
+          component={FourthPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FifthPage"
+          component={FifthPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FinalPage"
+          component={FinalPage}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

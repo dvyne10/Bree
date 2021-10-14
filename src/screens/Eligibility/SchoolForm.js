@@ -27,7 +27,7 @@ const SchoolForm = ({ navigation }) => {
     setTimeout(() => {
       setLoading(false);
       setPaymentSuccessfull(true);
-    }, 5000);
+    }, 300);
   };
 
   const confirmApplication = () => {
@@ -35,7 +35,8 @@ const SchoolForm = ({ navigation }) => {
       setLoading(false);
       setPaymentSuccessfull(false);
       setReview(false);
-    }, 5000);
+      navigation.navigate('FormScreen');
+    }, 300);
   };
 
   return (
@@ -81,7 +82,7 @@ const SchoolForm = ({ navigation }) => {
                 source={require('#/images/school_icon.png')}
                 style={{ width: 50, height: 50, marginRight: 10 }}
               />
-              <StyledText>
+              <StyledText style={{ width: '50%' }}>
                 {'Ghana Communication Technology University (GCTU)'}
               </StyledText>
             </View>
