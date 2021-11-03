@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, ScrollView, View } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { Button, StyledText, TextInput } from '~/components';
@@ -13,8 +13,11 @@ import ThirdPage from '../Forms/ThirdPage';
 import FourthPage from '../Forms/FourthPage';
 import FifthPage from '../Forms/FifthPage';
 import FinalPage from '../Forms/FinalPage';
+import axiosInstance from '../../utils/axiosInstance';
+import AuthContext from '~/context/authContext';
 
 const EligibilityScreen = ({ navigation }) => {
+  const { token } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [items, setItems] = useState(courses);
@@ -141,9 +144,27 @@ const EligibilityScreen = ({ navigation }) => {
             <Button
               style={styles.button}
               // disabled={error}
-              onPress={() => {
-                // console.log('newCore', core);
-                // console.log('newElective', elective);
+              onPress={async () => {
+                let finalObj = {};
+                const finalArray = [
+                  ...core.map(value => ({ [value.value]: value.grade })),
+                  ...elective.map(value => ({ [value.value]: value.grade })),
+                ];
+                finalArray.forEach(element => {
+                  finalObj = { ...finalObj, ...element };
+                });
+                await axiosInstance.post(
+                  '/saveResults',
+                  {
+                    programme: value,
+                    results: finalObj,
+                  },
+                  {
+                    headers: {
+                      Authorization: token,
+                    },
+                  },
+                );
                 navigation.navigate('SearchResults');
               }}>
               <Button.Text color={'white'}>Next</Button.Text>

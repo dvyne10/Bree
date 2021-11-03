@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -15,10 +15,13 @@ import {
 import BottomTabNavigator from './BottomTabNavigator';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { EditPencil } from '~/components/svgs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AuthContext from '~/context/authContext';
 
 const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props) {
+  const { setToken } = useContext(AuthContext);
   return (
     <DrawerContentScrollView {...props}>
       <View style={{ padding: 10 }}>
@@ -45,7 +48,14 @@ function CustomDrawerContent(props) {
       </View>
       <DrawerItemList {...props} />
       <View style={{ padding: 20 }}>
-        <StyledText size={12}>Log Out</StyledText>
+        <StyledText
+          size={12}
+          onPress={async () => {
+            await AsyncStorage.removeItem('token');
+            setToken(null);
+          }}>
+          Log Out
+        </StyledText>
       </View>
     </DrawerContentScrollView>
   );

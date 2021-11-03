@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, StatusBar, StyleSheet } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import FastImage from 'react-native-fast-image';
@@ -9,8 +9,13 @@ import {
   PersonIcon,
   PhoneIcon,
 } from '~/components/svgs';
+import axiosInstance from '../../utils/axiosInstance';
 
-const Screen0ne = ({ navigation }) => {
+const Screen0ne = ({ navigation, route }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const { userName, phoneNumber } = route?.params;
   const styles = generateStyles();
   return (
     <>
@@ -50,18 +55,29 @@ const Screen0ne = ({ navigation }) => {
         <View style={styles.body}>
           <TextInput
             containerStyleOverride={styles.textInputContainer}
-            placeholder={'Email'}>
+            placeholder={'Email'}
+            value={email}
+            onChangeText={setEmail}>
             <PasswordIcon fill={'black'} width={20} height={20} />
           </TextInput>
           <TextInput
             containerStyleOverride={styles.textInputContainer}
-            placeholder={'Password'}>
+            placeholder={'Password'}
+            value={password}
+            onChangeText={setPassword}>
             <PasswordIcon fill={'black'} width={20} height={20} />
           </TextInput>
           <Button
             style={styles.button}
-            onPress={() => {
-              navigation.navigate('OtpScreen');
+            onPress={async () => {
+              const { data: res } = await axiosInstance.post('/signup', {
+                username: userName,
+                password,
+                email,
+                phonenumber: phoneNumber,
+              });
+              res &&
+                navigation.navigate('OtpScreen', { token: res.data.token });
             }}>
             <Button.Text color={'white'}>Create account</Button.Text>
           </Button>

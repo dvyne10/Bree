@@ -1,11 +1,17 @@
-import React, { Component } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, StatusBar, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import FastImage from 'react-native-fast-image';
 import { Button, StyledText, TappableText, TextInput } from '~/components';
 import { PasswordIcon, PersonIcon } from '~/components/svgs';
+import axiosInstance from '../../utils/axiosInstance';
+import AuthContext from '../../context/authContext';
 
 const SignInScreen = ({ navigation }) => {
+  const { setToken } = useContext(AuthContext);
+  const [userName, setUserName] = useState('ImmArkorful');
+  const [password, setPassword] = useState('123456789');
   const styles = generateStyles();
   return (
     <>
@@ -35,18 +41,27 @@ const SignInScreen = ({ navigation }) => {
         <View>
           <TextInput
             containerStyleOverride={styles.textInputContainer}
-            placeholder={'Username/Phone number'}>
+            placeholder={'Username/Phone number'}
+            value={userName}
+            onChangeText={setUserName}>
             <PersonIcon fill={'black'} width={20} height={20} />
           </TextInput>
           <TextInput
             containerStyleOverride={styles.textInputContainer}
-            placeholder={'Password'}>
+            placeholder={'Password'}
+            value={password}
+            onChangeText={setPassword}>
             <PasswordIcon />
           </TextInput>
           <Button
             style={styles.button}
-            onPress={() => {
-              console.log('sign In ');
+            onPress={async () => {
+              const { data } = await axiosInstance.post('/login', {
+                username: userName,
+                password,
+              });
+              await AsyncStorage.setItem('token', data.data.token);
+              setToken(data.data.token);
             }}>
             <Button.Text color={'white'}>Sign In</Button.Text>
           </Button>

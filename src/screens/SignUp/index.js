@@ -1,20 +1,18 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { View, StatusBar, StyleSheet } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import FastImage from 'react-native-fast-image';
 import { Button, StyledText, TappableText, TextInput } from '~/components';
-import {
-  AddPersonIcon,
-  PasswordIcon,
-  PersonIcon,
-  PhoneIcon,
-} from '~/components/svgs';
+import { AddPersonIcon, PhoneIcon } from '~/components/svgs';
 import { createStackNavigator } from '@react-navigation/stack';
 
 //screens
 import Screen0ne from './ScreenOne';
+import axiosInstance from '../../utils/axiosInstance';
 
 const SignUpScreen = ({ navigation }) => {
+  const [userName, setUserName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const styles = generateStyles();
   return (
     <>
@@ -54,18 +52,25 @@ const SignUpScreen = ({ navigation }) => {
         <View style={styles.body}>
           <TextInput
             containerStyleOverride={styles.textInputContainer}
-            placeholder={'Username'}>
+            placeholder={'Username'}
+            value={userName}
+            onChangeText={setUserName}>
             <AddPersonIcon fill={'black'} width={20} height={20} />
           </TextInput>
           <TextInput
             containerStyleOverride={styles.textInputContainer}
-            placeholder={'Phone number'}>
+            placeholder={'Phone number'}
+            value={phoneNumber}
+            onChangeText={setPhoneNumber}>
             <PhoneIcon fill={'black'} width={20} height={20} />
           </TextInput>
           <Button
             style={styles.button}
             onPress={() => {
-              console.log('sign In ');
+              navigation.navigate('Screen0ne', {
+                userName: userName,
+                phoneNumber: phoneNumber,
+              });
             }}>
             <Button.Text color={'white'}>Continue</Button.Text>
           </Button>

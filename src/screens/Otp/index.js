@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import { View, StatusBar, StyleSheet } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import FastImage from 'react-native-fast-image';
@@ -10,8 +10,12 @@ import {
   PersonIcon,
   PhoneIcon,
 } from '~/components/svgs';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AuthContext from '~/context/authContext';
 
-const OtpScreen = ({ navigation }) => {
+const OtpScreen = ({ navigation, route }) => {
+  const { setToken } = useContext(AuthContext);
+  const { token } = route.params;
   const styles = generateStyles();
   return (
     <>
@@ -75,8 +79,12 @@ const OtpScreen = ({ navigation }) => {
           </View>
           <Button
             style={styles.button}
-            onPress={() => {
-              navigation.navigate('BottomTabNavigator');
+            onPress={async () => {
+              await AsyncStorage.setItem('token', token);
+              setToken(token);
+              setTimeout(() => {
+                navigation.navigate('BottomTabNavigator');
+              }, 500);
             }}>
             <Button.Text color={'white'}>Verify</Button.Text>
           </Button>

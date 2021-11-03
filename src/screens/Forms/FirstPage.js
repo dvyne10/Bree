@@ -10,6 +10,17 @@ const PAGE_WIDTH = Dimensions.get('window').width;
 
 const FirstPage = ({ navigation }) => {
   const [open, setOpen] = useState(false);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [otherNames, setOtherNames] = useState('');
+  const [title, setTitle] = useState('');
+  const [DOB, setDOB] = useState('');
+  const [nationalityText, setNationalityText] = useState('');
+  const [maritalStatusText, setMaritalStatusText] = useState('');
+  const [disabilityText, setDisabilityText] = useState('');
+  const [firstPhoneNumber, setFirstPhoneNumber] = useState('');
+  const [secondPhoneNumber, setSecondPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
   const [openNationality, setOpenNationality] = useState(false);
   const [openMaritalStatus, setOpenMaritalStatus] = useState(false);
   const [maritalStatus, setMaritalStatus] = useState([
@@ -70,7 +81,8 @@ const FirstPage = ({ navigation }) => {
                 placeholder="Brandon"
                 placeholderTextColor="black"
                 maxLength={2}
-                onChangeText={value => {}}
+                value={firstName}
+                onChangeText={value => setFirstName}
               />
             </View>
             <View>
@@ -89,7 +101,8 @@ const FirstPage = ({ navigation }) => {
                 placeholder="Armah"
                 placeholderTextColor="black"
                 maxLength={2}
-                onChangeText={value => {}}
+                value={lastName}
+                onChangeText={value => setLastName}
               />
             </View>
           </View>
@@ -110,7 +123,8 @@ const FirstPage = ({ navigation }) => {
                 placeholder="Quarcoo"
                 placeholderTextColor="black"
                 maxLength={2}
-                onChangeText={value => {}}
+                value={otherNames}
+                onChangeText={value => setOtherNames}
               />
             </View>
             <View>
@@ -120,10 +134,10 @@ const FirstPage = ({ navigation }) => {
               <View>
                 <DropDownPicker
                   open={open}
-                  value={value}
+                  value={title}
                   items={items}
                   setOpen={setOpen}
-                  setValue={setValue}
+                  setValue={setTitle}
                   setItems={setItems}
                   style={{
                     borderRadius: 20,
@@ -144,7 +158,7 @@ const FirstPage = ({ navigation }) => {
                     elevation: 1000,
                     zIndex: 1000,
                   }}
-                  onChangeValue={value => {}}
+                  onChangeValue={setTitle}
                 />
               </View>
             </View>
@@ -166,7 +180,8 @@ const FirstPage = ({ navigation }) => {
                 placeholder="28/02/96"
                 placeholderTextColor="black"
                 maxLength={2}
-                onChangeText={value => {}}
+                value={DOB}
+                onChangeText={setDOB}
               />
             </View>
             <View>
@@ -176,10 +191,10 @@ const FirstPage = ({ navigation }) => {
               <View>
                 <DropDownPicker
                   open={openNationality}
-                  value={value}
+                  value={nationalityText}
                   items={nationality}
                   setOpen={setOpenNationality}
-                  setValue={setValue}
+                  setValue={setNationalityText}
                   setItems={setNationality}
                   style={{
                     borderRadius: 20,
@@ -200,7 +215,7 @@ const FirstPage = ({ navigation }) => {
                     backgroundColor: '#dddddd',
                     borderWidth: 0,
                   }}
-                  onChangeValue={value => {}}
+                  onChangeValue={setNationalityText}
                 />
               </View>
             </View>
@@ -213,10 +228,10 @@ const FirstPage = ({ navigation }) => {
               <View>
                 <DropDownPicker
                   open={openMaritalStatus}
-                  value={value}
+                  value={maritalStatusText}
                   items={maritalStatus}
                   setOpen={setOpenMaritalStatus}
-                  setValue={setValue}
+                  setValue={setMaritalStatusText}
                   setItems={setMaritalStatus}
                   style={{
                     borderRadius: 20,
@@ -237,7 +252,7 @@ const FirstPage = ({ navigation }) => {
                     backgroundColor: '#dddddd',
                     borderWidth: 0,
                   }}
-                  onChangeValue={value => {}}
+                  onChangeValue={setMaritalStatusText}
                 />
               </View>
             </View>
@@ -248,10 +263,10 @@ const FirstPage = ({ navigation }) => {
               <View>
                 <DropDownPicker
                   open={openDisability}
-                  value={value}
+                  value={disabilityText}
                   items={disability}
                   setOpen={setOpenDisability}
-                  setValue={setValue}
+                  setValue={setDisabilityText}
                   setItems={setDisability}
                   style={{
                     borderRadius: 20,
@@ -272,7 +287,7 @@ const FirstPage = ({ navigation }) => {
                     backgroundColor: '#dddddd',
                     borderWidth: 0,
                   }}
-                  onChangeValue={value => {}}
+                  onChangeValue={setDisabilityText}
                 />
               </View>
             </View>
@@ -334,7 +349,8 @@ const FirstPage = ({ navigation }) => {
                 placeholder="example@gmail.com"
                 placeholderTextColor="black"
                 maxLength={2}
-                onChangeText={value => {}}
+                value={email}
+                onChangeText={setEmail}
               />
             </View>
           </View>

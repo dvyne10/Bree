@@ -18,7 +18,7 @@ const RootNavigator = () => {
   return (
     <>
       <Stack.Navigator initialRouteName="SplashScreen">
-        {/* <Stack.Screen
+        <Stack.Screen
           name="SplashScreen"
           component={SplashScreen}
           options={{ headerShown: false }}
@@ -38,7 +38,7 @@ const RootNavigator = () => {
           component={OtpScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="HomeScreen" component={HomeScreen} /> */}
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
         {/* <Stack.Screen
           name="BottomTabNavigator"
           component={BottomTabNavigator}
